@@ -5,9 +5,13 @@ class FormStore {
         this.store = {}
         this.fieldEntities = []
     }
-
+    // 注册与取消注册
     registerFieldEntity = (entity) => {
-        this.fieldEntities.push(entity)
+        this.fieldEntities.push(entity);
+        return () => {
+            this.fieldEntities = this.fieldEntities.filter(_en => _en !== entity)
+            delete this.store[entity.props.name]
+        }
     }
 
     setFieldValue = (newStore) => {
