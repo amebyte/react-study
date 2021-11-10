@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 class FormStore {
     constructor() {
         // 数据仓库
@@ -29,6 +29,17 @@ class FormStore {
     }
 
 }
-export default function useForm() {
-    return []
+export default function useForm(form) {
+    // 把formStore存起来，确保组件的任何一个生命周期里，访问都是同一个值
+    const formRef = useRef(null)
+    if(!formRef.current) {
+        if(form) {
+            formRef.current = form
+        } else {
+            const formStore = new FormStore()
+            formRef.current = formStore.getForm()
+        }
+    }
+    
+    return [formRef.current]
 }
