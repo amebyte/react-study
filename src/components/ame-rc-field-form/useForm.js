@@ -10,6 +10,7 @@ class FormStore {
             ...this.store,
             ...newStore
         }
+        console.log('store', this.store)
     }
 
     getFieldsValue = () => {
