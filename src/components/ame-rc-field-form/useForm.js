@@ -3,6 +3,11 @@ class FormStore {
     constructor() {
         // 数据仓库
         this.store = {}
+        this.fieldEntities = []
+    }
+
+    registerFieldEntity = (entity) => {
+        this.fieldEntities.push(entity)
     }
 
     setFieldValue = (newStore) => {
@@ -11,6 +16,10 @@ class FormStore {
             ...newStore
         }
         console.log('store', this.store)
+        // 让组件更新
+        this.fieldEntities.forEach(entity => {
+            entity.onStoreChange()
+        })
     }
 
     getFieldsValue = () => {
@@ -25,7 +34,8 @@ class FormStore {
         return {
             setFieldValue: this.setFieldValue,
             getFieldsValue: this.getFieldsValue,
-            getFieldValue: this.getFieldValue
+            getFieldValue: this.getFieldValue,
+            registerFieldEntity: this.registerFieldEntity
         }
     }
 

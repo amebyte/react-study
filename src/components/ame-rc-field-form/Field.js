@@ -3,6 +3,14 @@ import FieldContext from "./FieldContext";
 
 export default class Field extends Component{
     static contextType = FieldContext
+
+    componentDidMount() {
+        this.context.registerFieldEntity(this)
+    }
+
+    onStoreChange = () => {
+        this.forceUpdate()
+    }
     getControlled = () => {
         const { getFieldValue, setFieldValue } = this.context
         const { name } = this.props
@@ -15,6 +23,7 @@ export default class Field extends Component{
         }
     }
     render() {
+        console.log('render')
         const returnChildNode = React.cloneElement(this.props.children, this.getControlled())
         return returnChildNode
     }
