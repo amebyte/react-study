@@ -18,7 +18,11 @@ class FormStore {
         console.log('store', this.store)
         // 让组件更新
         this.fieldEntities.forEach(entity => {
-            entity.onStoreChange()
+            Object.keys(newStore).forEach(k => {
+                if(k === entity.props.name) {
+                    entity.onStoreChange()                    
+                }
+            })
         })
     }
 
