@@ -4,7 +4,13 @@ class FormStore {
         // 数据仓库
         this.store = {}
         this.fieldEntities = []
+        this.callbacks = {}
     }
+
+    setCallbacks = (newCallbacks) => {
+        this.callbacks = { ...this.callbacks, ...newCallbacks}
+    }
+
     // 注册与取消注册
     registerFieldEntity = (entity) => {
         this.fieldEntities.push(entity);
@@ -37,13 +43,33 @@ class FormStore {
     getFieldValue = (name) => {
         return this.store[name]
     }
+
+    validate = () => {
+        let err = []
+
+        return err
+    }
+
+    submit = () => {
+        let err = this.validate()
+        const { onFinish, onFinishFailed } = this.callbacks
+        if(err.length === 0) {
+            onFinish(this.getFieldsValue())
+        } else {
+            onFinishFailed(err, this.getFieldsValue())
+        }
+    }
+
     // 返回数据仓库的权限
     getForm = () => {
         return {
             setFieldValue: this.setFieldValue,
             getFieldsValue: this.getFieldsValue,
             getFieldValue: this.getFieldValue,
-            registerFieldEntity: this.registerFieldEntity
+            registerFieldEntity: this.registerFieldEntity,
+            submit: this.submit,
+            validate: this.validate,
+            setCallbacks: this.setCallbacks
         }
     }
 

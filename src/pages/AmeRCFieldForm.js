@@ -18,6 +18,10 @@ export default function AmeRCFieldForm(props) {
     console.log("onFinishFailed", val); //sy-log
   };
 
+  useEffect(() => {
+      form.setFieldValue({ username: 'coboy' })
+  })
+
 
   return (
     <div>
